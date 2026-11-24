@@ -7,16 +7,16 @@ services:
     volumes:
       - ./codigo/:/var/www/html/
     ports:
-      - 81:80
+      - "81:80"
   
   db:
     image: mariadb:10.5
     container_name: "mariadb-dw"
     restart: always
     volumes:
-      - ./banco.sql:/docker-entrypoint-initdb.d/banco.sql
+      - ./banco/:/docker-entrypoint-initdb.d/
     environment:
-      - MARIADB_USER=root
-      - MARIADB_ROOT_PASSWORD=123
+      MYSQL_ROOT_PASSWORD: "123"
+      MYSQL_DATABASE: "mydb"
     ports:
-      - 3307:3306
+      - "3307:3306"
