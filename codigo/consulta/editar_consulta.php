@@ -1,6 +1,6 @@
 <?php
-require_once "conexao.php";
-require_once "verificar_login.php";
+require_once "../conexao.php";
+require_once "../verificar_login.php";
 
 $id = $_GET['id'];
 $res = mysqli_query($conexao, "SELECT * FROM consulta WHERE idconsulta = $id");
@@ -12,13 +12,13 @@ $consulta = mysqli_fetch_assoc($res);
 <head>
     <meta charset="UTF-8">
     <title>Editar Consulta</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
     <div class="container">
         <h2>Editar Consulta</h2>
-        <form action="save_editar_consulta.php" method="post">
+        <form action="save_edit_consulta.php" method="post">
             <input type="hidden" name="idconsulta" value="<?php echo $consulta['idconsulta']; ?>">
 
             Médico:<br>

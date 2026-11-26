@@ -14,8 +14,8 @@ require_once "verificar_login.php";
 
 <body>
     <ul>
-        <li><a href="form_consulta.php">Cadastro de Consulta</a></li>
-        <li><a href="list_consulta.php">Consultas</a></li>
+        <li><a href="consulta/form_consulta.php">Cadastro de Consulta</a></li>
+        <li><a href="consulta/list_consulta.php">Consultas</a></li>
     </ul>
 </body>
 

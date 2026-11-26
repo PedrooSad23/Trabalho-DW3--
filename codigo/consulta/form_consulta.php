@@ -1,20 +1,22 @@
 <?php
-require_once "verificar_login.php";
-require_once "conexao.php";
+require_once "../verificar_login.php";
+require_once "../conexao.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendar Consulta</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
     <div class="container">
         <h2>Agendar Consulta</h2>
         <form action="save_consulta.php" method="post">
-            
+
             Médico:<br>
             <select name="idmedico" required>
                 <option value="">Selecione</option>
@@ -62,7 +64,8 @@ require_once "conexao.php";
             <input type="submit" value="Agendar">
         </form>
         <br>
-        <a href="principal.php">Voltar</a>
+        <a href="../principal.php">Voltar</a>
     </div>
 </body>
+
 </html>

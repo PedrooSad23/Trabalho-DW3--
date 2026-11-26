@@ -1,6 +1,6 @@
 <?php
-require_once "conexao.php";
-require_once "verificar_login.php";
+require_once "../conexao.php";
+require_once "../verificar_login.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -8,7 +8,7 @@ require_once "verificar_login.php";
 <head>
     <meta charset="UTF-8">
     <title>Listar Consultas</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>

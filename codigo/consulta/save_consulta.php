@@ -1,5 +1,5 @@
 <?php
-require_once "conexao.php";
+require_once "../conexao.php";
 require_once "verificar_login.php";
 
 $idmedico = $_POST['idmedico'];
