@@ -6,20 +6,20 @@ body {
 }
 
 .container {
-    width: 300px;
+    width: 600px;
+    /* Aumentado um pouco para caber melhor a tabela */
 }
 
-input, select {
+input,
+select {
     display: block;
     width: 100%;
     padding: 5px;
     margin-top: 5px;
     margin-bottom: 10px;
-    align-items: center;
     text-align: center;
 }
 
-/* Deixa o checkbox alinhado certinho na mesma linha do nome do paciente */
 input[type="checkbox"] {
     display: inline-block;
     width: auto;
@@ -33,17 +33,32 @@ input[type="submit"] {
     color: white;
     border: none;
     padding: 8px;
+    text-align: center;
 }
 
-ul li a {
+/* Estilos para a Tabela de Listagem */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+th {
+    background-color: #f8f9fa;
+}
+
+a {
     text-decoration: none;
     color: #007bff;
-    padding: 10px 15px;
-    border-radius: 10px;
-    transition: background-color 0.2s, color 0.2s;
 }
 
-ul li a:hover {
-    background-color: #007bff;
-    color: #ffffff;
+a:hover {
+    text-decoration: underline;
 }

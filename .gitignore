@@ -1,0 +1,11 @@
+fotos_user/
+
+uploads/
+imagens/
+fotos/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.svg
