@@ -1,63 +1,68 @@
 <?php
-require_once "conexao.php";
 require_once "verificar_login.php";
+require_once "conexao.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Consulta</title>
+    <title>Agendar Consulta</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <form action="save_consulta.php" method="post">
-        <h1>Cadastro de Consulta</h1>
+    <div class="container">
+        <h2>Agendar Consulta</h2>
+        <form action="save_consulta.php" method="post">
+            
+            Médico:<br>
+            <select name="idmedico" required>
+                <option value="">Selecione</option>
+                <?php
+                $sql = "SELECT idmedico, nome FROM medico";
+                $stmt = mysqli_prepare($conexao, $sql);
+                mysqli_stmt_execute($stmt);
+                $res_medicos = mysqli_stmt_get_result($stmt);
+                while ($m = mysqli_fetch_assoc($res_medicos)) {
+                    echo "<option value='{$m['idmedico']}'>{$m['nome']}</option>";
+                }
+                ?>
+            </select><br><br>
 
-        Escolha um médico: <br>
-        <select name="idmedico" required>
-            <option value="">-- Selecione --</option>
+            Quarto:<br>
             <?php
-            $sql = "SELECT * FROM medico";
-            $comando = mysqli_prepare($conexao, $sql);
-            mysqli_stmt_execute($comando);
-            $medicos = mysqli_stmt_get_result($comando);
-
-            while ($medico = mysqli_fetch_array($medicos)) {
-                $medico_id = $medico['idmedico'];
-                $medico_nome = $medico['nome'];
-
-                echo "<option value='$medico_id'>$medico_nome</option>";
+            $sql = "SELECT idquarto FROM quarto";
+            $stmt = mysqli_prepare($conexao, $sql);
+            mysqli_stmt_execute($stmt);
+            $res_quartos = mysqli_stmt_get_result($stmt);
+            while ($q = mysqli_fetch_assoc($res_quartos)) {
+                echo "<input type='checkbox' name='idquarto[]' value='{$q['idquarto']}'> Quarto {$q['idquarto']}<br>";
             }
             ?>
-        </select> <br><br>
+            <br>
 
-        Escolha o Paciente: <br>
-        <?php
-        $sql = "SELECT * FROM paciente";
-        $comando = mysqli_prepare($conexao, $sql);
-        mysqli_stmt_execute($comando);
-        $pacientes = mysqli_stmt_get_result($comando);
+            Paciente:<br>
+            <?php
+            $sql = "SELECT idpaciente, nome FROM paciente";
+            $stmt = mysqli_prepare($conexao, $sql);
+            mysqli_stmt_execute($stmt);
+            $res_pacientes = mysqli_stmt_get_result($stmt);
+            while ($p = mysqli_fetch_assoc($res_pacientes)) {
+                echo "<input type='checkbox' name='idpaciente[]' value='{$p['idpaciente']}'> {$p['nome']}<br>";
+            }
+            ?>
+            <br>
 
-        while ($paciente = mysqli_fetch_array($pacientes)) {
-            $paciente_id = $paciente['idpaciente'];
-            $paciente_nome = $paciente['nome'];
+            Data:<br>
+            <input type="date" name="data_consulta" required><br><br>
 
-            echo "<input type='checkbox' name='idpaciente[]' value='$paciente_id'> $paciente_nome <br>";
-        }
-        ?>
+            Horário:<br>
+            <input type="time" name="horario" required><br><br>
+
+            <input type="submit" value="Agendar">
+        </form>
         <br>
-
-        Data e Hora: <br>
-        <input type="datetime-local" name="data_consulta" required> <br><br>
-
-        <input type="submit" value="Agendar Consulta">
-    </form>
-    
-    <br>
-    <a href="principal.php">Voltar à Página Principal</a>
+        <a href="principal.php">Voltar</a>
+    </div>
 </body>
-
 </html>
