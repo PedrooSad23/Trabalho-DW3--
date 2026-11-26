@@ -11,10 +11,10 @@
         <h2>Cadastro</h2>
         <form action="save_cadastro.php" method="post" enctype="multipart/form-data">
             Nome: <br>
-            <input type="text" name="nome" required> <br>
+            <input type="text" name="nome" required placeholder="Seu nome"> <br>
 
             E-mail: <br>
-            <input type="text" name="email" required> <br>
+            <input type="text" name="email" required placeholder="lindo@email.com"> <br>
 
             Senha: <br>
             <input type="password" name="senha" required> <br>

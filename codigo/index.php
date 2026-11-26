@@ -11,9 +11,9 @@
     <div class="container">
         <form action="verificar_login.php" method="post">
             E-mail: <br>
-            <input type="text" name="email"> <br>
+            <input type="text" name="email" placeholder="lindo@email.com"> <br>
             Senha: <br>
-            <input type="text" name="senha"> <br>
+            <input type="password" name="senha"> <br>
 
             <input type="submit" value="Logar">
         </form>
