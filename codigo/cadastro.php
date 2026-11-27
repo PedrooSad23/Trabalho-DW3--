@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
+    <title>Registar Utilizador</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="container">
-        <h2>Cadastro</h2>
+    <div class="container" style="width: 300px;">
+        <h2>Registar Utilizador</h2>
+        <!-- ATENÇÃO AO enctype="multipart/form-data" para aceitar arquivos -->
         <form action="save_cadastro.php" method="post" enctype="multipart/form-data">
-            Nome: <br>
-            <input type="text" name="nome" required placeholder="Seu nome"> <br>
+            Nome:<br>
+            <input type="text" name="nome" required><br>
 
-            E-mail: <br>
-            <input type="text" name="email" required placeholder="lindo@email.com"> <br>
+            E-mail:<br>
+            <input type="email" name="email" required><br>
 
-            Senha: <br>
-            <input type="password" name="senha" required> <br>
+            Senha:<br>
+            <input type="password" name="senha" required><br>
 
-            Foto: <br>
-            <input type="file" name="foto" required> <br><br>
+            Foto de Perfil:<br>
+            <input type="file" name="foto" accept="image/*" required><br><br>
 
-            Você é?: <br>
-            <select name="tipo" required>
-                <option value="paciente">Paciente</option>
-                <option value="medico">Médico</option>
-            </select> <br><br>
-
-            <input type="submit" value="Cadastrar">
+            <input type="submit" value="Registar">
         </form>
+        <br>
+        <a href="index.php">Voltar</a>
 
-        <a href="index.php">Já tenho cadastro.</a>
     </div>
 </body>
+
 </html>

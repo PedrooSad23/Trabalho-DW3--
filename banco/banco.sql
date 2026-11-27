@@ -1,4 +1,4 @@
--- MySQL Script gerado pelo Workbench
+-- MySQL Script simplificado (Usuário comum sem coluna tipo)
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
@@ -6,52 +6,15 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
--- Tabela de Usuários (Login)
+-- Tabela de Usuários
 CREATE TABLE IF NOT EXISTS `mydb`.`usuario` (
   `idusuario` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(150) NOT NULL,
   `email` VARCHAR(150) NOT NULL,
   `senha` VARCHAR(255) NOT NULL,
-  `foto` VARCHAR(250) NOT NULL,
-  `tipo` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`idusuario`))
-ENGINE = InnoDB;
-
--- Tabela de Pacientes
-CREATE TABLE IF NOT EXISTS `mydb`.`paciente` (
-  `idpaciente` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(150) NOT NULL,
-  `cpf` VARCHAR(14) NOT NULL,
-  `data_nascimento` DATE NOT NULL,
-  `telefone` VARCHAR(20) NOT NULL,
-  `endereco` VARCHAR(150) NOT NULL,
-  `estado` TEXT NULL,
-  `idusuario` INT NOT NULL,
-  PRIMARY KEY (`idpaciente`),
-  UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC),
-  INDEX `fk_paciente_usuario1_idx` (`idusuario` ASC),
-  CONSTRAINT `fk_paciente_usuario1`
-    FOREIGN KEY (`idusuario`)
-    REFERENCES `mydb`.`usuario` (`idusuario`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
--- Tabela de Médicos
-CREATE TABLE IF NOT EXISTS `mydb`.`medico` (
-  `idmedico` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(150) NOT NULL,
-  `crm` VARCHAR(50) NOT NULL,
-  `especializacao` VARCHAR(100) NOT NULL,
-  `telefone` VARCHAR(20) NOT NULL,
-  `idusuario` INT NOT NULL,
-  PRIMARY KEY (`idmedico`),
-  INDEX `fk_medico_usuario1_idx` (`idusuario` ASC),
-  CONSTRAINT `fk_medico_usuario1`
-    FOREIGN KEY (`idusuario`)
-    REFERENCES `mydb`.`usuario` (`idusuario`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+  `foto` VARCHAR(250) NULL,
+  PRIMARY KEY (`idusuario`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
 
 -- Tabela de Quartos
@@ -79,42 +42,39 @@ CREATE TABLE IF NOT EXISTS `mydb`.`consulta` (
   INDEX `fk_consulta_quarto1_idx` (`idquarto` ASC),
   CONSTRAINT `fk_consulta_paciente`
     FOREIGN KEY (`idpaciente`)
-    REFERENCES `mydb`.`paciente` (`idpaciente`),
+    REFERENCES `mydb`.`usuario` (`idusuario`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_consulta_medico1`
     FOREIGN KEY (`idmedico`)
-    REFERENCES `mydb`.`medico` (`idmedico`),
+    REFERENCES `mydb`.`usuario` (`idusuario`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_consulta_quarto1`
     FOREIGN KEY (`idquarto`)
     REFERENCES `mydb`.`quarto` (`idquarto`)
-)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- =====================================================
--- DADOS INICIAIS (INSERTS PARA CADA TABELA)
+-- DADOS INICIAIS
 -- =====================================================
 
--- 1. Inserir Usuários (Médico e Paciente)
+-- 1. Inserir Usuários
 -- Senha padrão para ambos: 123456 (gerada por password_hash)
-INSERT INTO `mydb`.`usuario` (`idusuario`, `nome`, `email`, `senha`, `foto`, `tipo`) VALUES
-(1, 'Dr. Carlos Silva', 'carlos@hospital.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'default.png', 'medico'),
-(2, 'Ana Souza', 'ana@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'default.png', 'paciente');
+INSERT INTO `mydb`.`usuario` (`idusuario`, `nome`, `email`, `senha`, `foto`) VALUES
+(1, 'Dr. Carlos Silva', 'carlos@hospital.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'default.png'),
+(2, 'Ana Souza', 'ana@email.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'default.png');
 
--- 2. Inserir Médico (vinculado ao idusuario 1)
-INSERT INTO `mydb`.`medico` (`idmedico`, `nome`, `crm`, `especializacao`, `telefone`, `idusuario`) VALUES
-(1, 'Dr. Carlos Silva', 'CRM12345', 'Cardiologia', '(11) 98888-7777', 1);
-
--- 3. Inserir Paciente (vinculado ao idusuario 2)
-INSERT INTO `mydb`.`paciente` (`idpaciente`, `nome`, `cpf`, `data_nascimento`, `telefone`, `endereco`, `estado`, `idusuario`) VALUES
-(1, 'Ana Souza', '123.456.789-00', '1995-05-12', '(11) 99999-1111', 'Rua das Flores, 123', 'Estável', 2);
-
--- 4. Inserir Quarto
+-- 2. Inserir Quarto
 INSERT INTO `mydb`.`quarto` (`idquarto`, `numero`, `tipo`, `capacidade`, `status`) VALUES
 (1, 101, 'Enfermaria', 2, 'Disponível');
 
--- 5. Inserir Consulta (vinculando paciente 1, médico 1 e quarto 1)
+-- 3. Inserir Consulta
 INSERT INTO `mydb`.`consulta` (`idconsulta`, `idpaciente`, `idmedico`, `idquarto`, `data_consulta`, `horario`, `diagnostico`) VALUES
-(1, 1, 1, 1, '2026-12-01', '14:30:00', 'Primeira consulta de rotina cardiológica.');
+(1, 2, 1, 1, '2026-12-01', '14:30:00', 'Primeira consulta de rotina cardiológica.');
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
